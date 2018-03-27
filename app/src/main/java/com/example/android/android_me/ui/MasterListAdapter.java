@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
 import com.example.android.android_me.R;
 import com.example.android.android_me.data.AndroidImageAssets;
 
@@ -18,6 +19,15 @@ import java.util.List;
 public class MasterListAdapter extends RecyclerView.Adapter<MasterListAdapter.MasterListViewHolder> {
 
     List<Integer> imageIds = AndroidImageAssets.getAll();
+    OnItemClickListener onItemClickListener;
+
+    public interface OnItemClickListener {
+        void onItemClicked(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
 
     @NonNull
     @Override
@@ -42,6 +52,14 @@ public class MasterListAdapter extends RecyclerView.Adapter<MasterListAdapter.Ma
         public MasterListViewHolder(View itemView) {
             super(itemView);
             bodyPartIv = itemView.findViewById(R.id.bodyPartIv);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (onItemClickListener != null) {
+                        onItemClickListener.onItemClicked(getAdapterPosition());
+                    }
+                }
+            });
         }
     }
 }
