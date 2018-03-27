@@ -32,30 +32,33 @@ public class AndroidMeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_android_me);
 
-        BodyPartFragment headFragment = new BodyPartFragment();
-        headFragment.setImageIds(AndroidImageAssets.getHeads());
-        headFragment.setListIndex(0);
+        if (savedInstanceState == null) {
 
-        BodyPartFragment bodyFragment = new BodyPartFragment();
-        bodyFragment.setImageIds(AndroidImageAssets.getBodies());
-        bodyFragment.setListIndex(0);
+            BodyPartFragment headFragment = new BodyPartFragment();
+            headFragment.setImageIds(AndroidImageAssets.getHeads());
+            headFragment.setListIndex(0);
 
-        BodyPartFragment legFragment = new BodyPartFragment();
-        legFragment.setImageIds(AndroidImageAssets.getLegs());
-        legFragment.setListIndex(0);
+            BodyPartFragment bodyFragment = new BodyPartFragment();
+            bodyFragment.setImageIds(AndroidImageAssets.getBodies());
+            bodyFragment.setListIndex(0);
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
+            BodyPartFragment legFragment = new BodyPartFragment();
+            legFragment.setImageIds(AndroidImageAssets.getLegs());
+            legFragment.setListIndex(0);
 
-        fragmentManager.beginTransaction()
-                .add(R.id.headContainerFl, headFragment)
-                .commit();
+            FragmentManager fragmentManager = getSupportFragmentManager();
 
-        fragmentManager.beginTransaction()
-                .add(R.id.bodyContainerFl, bodyFragment)
-                .commit();
+            fragmentManager.beginTransaction()
+                    .add(R.id.headContainerFl, headFragment)
+                    .commit();
 
-        fragmentManager.beginTransaction()
-                .add(R.id.legContainerFl, legFragment)
-                .commit();
+            fragmentManager.beginTransaction()
+                    .add(R.id.bodyContainerFl, bodyFragment)
+                    .commit();
+
+            fragmentManager.beginTransaction()
+                    .add(R.id.legContainerFl, legFragment)
+                    .commit();
+        }
     }
 }
