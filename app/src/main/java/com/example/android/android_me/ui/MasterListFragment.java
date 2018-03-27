@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.android.android_me.R;
 
@@ -19,10 +20,12 @@ import com.example.android.android_me.R;
 
 public class MasterListFragment extends Fragment implements MasterListAdapter.OnItemClickListener {
 
-    OnImageClickListener callback;
+    OnInteractionListener callback;
 
-    public interface OnImageClickListener {
+    public interface OnInteractionListener {
         void onImageSelected(int position);
+
+        void onNextButtonClicked();
     }
 
     public MasterListFragment() {
@@ -32,6 +35,13 @@ public class MasterListFragment extends Fragment implements MasterListAdapter.On
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_master_list, container, false);
+        Button nextBtn = view.findViewById(R.id.nextBtn);
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callback.onNextButtonClicked();
+            }
+        });
         RecyclerView bodyPartImageRv = view.findViewById(R.id.bodyPartImageRv);
         MasterListAdapter adapter = new MasterListAdapter();
         adapter.setOnItemClickListener(this);
@@ -46,7 +56,7 @@ public class MasterListFragment extends Fragment implements MasterListAdapter.On
         super.onAttach(context);
 
         try {
-            callback = (OnImageClickListener) context;
+            callback = (OnInteractionListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
                     + "must implement OnImageClickListener");
