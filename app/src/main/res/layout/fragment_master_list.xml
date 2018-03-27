@@ -18,6 +18,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:text="@string/next" />
+        android:text="@string/next"
+        android:onClick="onNextBtnClicked"/>
 
 </LinearLayout>

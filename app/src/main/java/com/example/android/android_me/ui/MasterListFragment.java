@@ -1,6 +1,7 @@
 package com.example.android.android_me.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,11 +22,21 @@ import com.example.android.android_me.R;
 public class MasterListFragment extends Fragment implements MasterListAdapter.OnItemClickListener {
 
     OnInteractionListener callback;
+    RecyclerView bodyPartImageRv;
+    Button nextBtn;
+
+    public void setColumns(int columns) {
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), columns);
+        bodyPartImageRv.setLayoutManager(layoutManager);
+    }
+
+    public void hideNextBtn() {
+        nextBtn.setVisibility(View.GONE);
+    }
 
     public interface OnInteractionListener {
         void onImageSelected(int position);
-
-        void onNextButtonClicked();
+        void onNextBtnClicked();
     }
 
     public MasterListFragment() {
@@ -35,14 +46,8 @@ public class MasterListFragment extends Fragment implements MasterListAdapter.On
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_master_list, container, false);
-        Button nextBtn = view.findViewById(R.id.nextBtn);
-        nextBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                callback.onNextButtonClicked();
-            }
-        });
-        RecyclerView bodyPartImageRv = view.findViewById(R.id.bodyPartImageRv);
+        bodyPartImageRv = view.findViewById(R.id.bodyPartImageRv);
+        nextBtn = view.findViewById(R.id.nextBtn);
         MasterListAdapter adapter = new MasterListAdapter();
         adapter.setOnItemClickListener(this);
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 3);
@@ -66,5 +71,9 @@ public class MasterListFragment extends Fragment implements MasterListAdapter.On
     @Override
     public void onItemClicked(int position) {
         callback.onImageSelected(position);
+    }
+
+    public void onNextBtnClicked(View view) {
+        callback.onNextBtnClicked();
     }
 }
